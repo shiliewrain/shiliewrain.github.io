@@ -2,7 +2,6 @@
 layout: post
 title : 可能是一个计划
 categories: 心情
-date : 2017-02-14 pm
 ---
 * content
 {:toc}
