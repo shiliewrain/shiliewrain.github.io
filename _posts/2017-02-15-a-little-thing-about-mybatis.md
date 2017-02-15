@@ -28,7 +28,13 @@ tags: 后台 框架 持久层
 	2.建立数据库连接：`Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database",username,password);`
 	3.创建Statement：`Statement st = con.createStatement();`
 	4.执行sql语句并返回结果集：`ResultSet rs = st.execute(sql);`
-	大致上应该就这些步骤，先大概记录一下。
+	```java
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database",username,password);
+		Statement st = con.createStatement();
+		ResultSet rs = st.execute(sql);
+	```
+		大致上应该就这些步骤，先大概记录一下。
 
 ## Mybatis
 
