@@ -27,10 +27,10 @@ description:记录刚开始了解到的一点点Mybatis的内容
 
 	>JDBC（Java Data Base Connectivity,java数据库连接）是一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问，它由一组用Java语言编写的类和接口组成。
 	JDBC连接数据库步骤，以MySql为例：
-	1.加载数据库驱动：Class.forName("com.mysql.jdbc.Driver");
-	2.建立数据库连接：Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database",username,password);
-	3.创建Statement：Statement st = con.createStatement();
-	4.执行sql语句并返回结果集：ResultSet rs = st.execute(sql);
+	1.加载数据库驱动：`Class.forName("com.mysql.jdbc.Driver");`
+	2.建立数据库连接：`Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database",username,password);`
+	3.创建Statement：`Statement st = con.createStatement();`
+	4.执行sql语句并返回结果集：`ResultSet rs = st.execute(sql);`
 	大致上应该就这些步骤，先大概记录一下。
 
 ## Mybatis
