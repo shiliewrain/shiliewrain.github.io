@@ -28,7 +28,7 @@ JDBC连接数据库步骤，以MySql为例：
 
 1.加载数据库驱动：`Class.forName("com.mysql.jdbc.Driver");`
 
-2.建立数据库连接：`Connection con = DriverManager.getConnection("jdbc:mysql://url:3306/database",username,password);`
+2.建立数据库连接：`Connection con = DriverManager.getConnection("jdbc:mysql://url:3306/db",uname,pword);`
 
 3.创建Statement：`Statement st = con.createStatement();`
 
