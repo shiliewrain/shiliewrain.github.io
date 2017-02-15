@@ -9,6 +9,7 @@ tags:
 description:记录刚开始了解到的一点点Mybatis的内容
 ---
 * content
+{:toc}
 ## 背景
 
 	今天上班由“CJ”转“70”的一个方法看到了缓存，具体的上下文就不说那么多了。公司的项目中，我暂时了解到的缓存有两种方式，一个是保存在本地内存，另外一个是保存在大缓存平台。反正我现在都不太了解，于是就提出了自己的第一个需要了解的地方————缓存。
@@ -31,4 +32,8 @@ description:记录刚开始了解到的一点点Mybatis的内容
 	3.创建Statement：Statement st = con.createStatement();
 	4.执行sql语句并返回结果集：ResultSet rs = st.execute(sql);
 	大致上应该就这些步骤，先大概记录一下。
+
+## Mybatis
+
+	网上有特别多的简介，我就懒得搬了。刚发现一个讲解Mybatis的专栏，[传送门](http://blog.csdn.net/column/details/mybatis-principle.html)
 
