@@ -65,5 +65,5 @@ tags: 后台 框架 持久层
 
 　　* 工作流程：查询操作会访问PerpetualCache，当返回为空时，才会访问数据库，并在缓存之后返回结果。
 
-　　* CacheKey：statementId + rowBounds + sql + JDBC所需要的参数
+    * CacheKey：statementId + rowBounds + sql + JDBC所需要的参数
 
