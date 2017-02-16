@@ -31,13 +31,13 @@ tags: 后台 框架 持久层
 
 　　JDBC连接数据库步骤，以MySql为例：
   
-　　1.加载数据库驱动：`Class.forName("com.mysql.jdbc.Driver");`
+　　1.　加载数据库驱动：`Class.forName("com.mysql.jdbc.Driver");`
 
-　　2.建立数据库连接：`Connection con=DriverManager.getConnection(url,uname,pword);`
+　　2.　建立数据库连接：`Connection con=DriverManager.getConnection(url,uname,pword);`
 
-　　3.创建Statement：`Statement st=con.createStatement();`
+　　3.　创建Statement：`Statement st=con.createStatement();`
 
-　　4.执行sql语句并返回结果集：`ResultSet rs=st.execute(sql);`
+　　4.　执行sql语句并返回结果集：`ResultSet rs=st.execute(sql);`
   
 　　大致上应该就这些步骤，先大概记录一下。
 
