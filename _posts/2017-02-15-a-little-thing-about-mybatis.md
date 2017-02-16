@@ -64,3 +64,19 @@ tags: 后台 框架 持久层
 * 工作流程：查询操作会访问PerpetualCache，当返回为空时，才会访问数据库，并在缓存之后返回结果。
 * CacheKey：statementId + rowBounds + sql + JDBC所需要的参数
 
+
+### Mybatis二级缓存
+
+　　关于Mybatis二级缓存，博客地址-[传送门](http://blog.csdn.net/luanlouis/article/details/41408341)
+
+　　因为确实没有实践，所以没完全理解，记一些可能已经理解的点：
+
+* Mybatis的一级缓存是Session级别的，二级缓存是application级别的。
+* Mybatis二级缓存是对Executor加上装饰者：CachingExecutor，设置"cacheEnabled=true"后，SqlSession就会通过CachingExecutor来完成操作请求。当缓存未命中时，才调用Executor来完成操作，并且将结果缓存。
+* 根据传入到`SqlSession.getMapper(interfaceType)`接口类型和XML配置生成的代理对象叫Mapper，每一个Mapper都有一个Cache对象。
+* 一级缓存和二级缓存都是实现Cache接口，Mybatis通过装饰模式定义了大量的Cache装饰器增强缓存功能。
+
+　　另外记一下上面博文里的一张缓存机制图：
+
+![mybatis cache](http://img.blog.csdn.net/20141123125616381)
+
