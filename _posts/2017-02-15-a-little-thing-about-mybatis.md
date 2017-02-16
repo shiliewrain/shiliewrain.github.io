@@ -41,6 +41,6 @@ tags: 后台 框架 持久层
 &nbsp;&nbsp;&nbsp;&nbsp;网上有特别多的简介，我就懒得搬了。刚发现一个讲解Mybatis的专栏--[传送门](http://blog.csdn.net/column/details/mybatis-principle.html)
 &nbsp;&nbsp;&nbsp;&nbsp;在某篇文章上截了个图，介绍了Mybatis的整体流程图，如下：
 
-![Mybatis process](../img/Mybatis流程图.png)
+![Mybatis process](http://img.my.csdn.net/uploads/201306/09/1370783456_4126.JPG)
 
   大概说来，就是SqlSessionFactoryBuilder创建Configuration对象，然后创建SqlSession工厂，新建一个sqlSession对象，里面会包含一个Executor对象，该对象调用StatementHandler就可以调用JDBC的接口操作数据库了。
