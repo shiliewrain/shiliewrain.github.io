@@ -12,6 +12,8 @@ categories : 设计模式
 
 ## 装饰者模式
 
+[好文传送门](http://www.cnblogs.com/java-my-life/archive/2012/04/20/2455726.html)
+
 ### 目的
 
 　　动态地给对象添加额外的职责。
@@ -55,7 +57,7 @@ public class ConcreteComponent implements Component{
 public abstract class Decorator implements Component{
 	public Component component;
 
-	public void getComponent(Component component){
+	public void setComponent(Component component){
 		this.component = component
 	}
 
@@ -74,7 +76,7 @@ public class ConcreteDecoratorA extends Decorator{
 	@Override
 	public void operation(){
 		System.out.println("涂防晒霜");
-		super.operation();
+		component.operation();
 	}
 }
 
@@ -82,8 +84,28 @@ public class ConcreteDecoratorB extends Decorator{
 	
 	@Override
 	public void operation(){
-		super.operation();
+		component.operation();
 		System.out.println("戴太阳镜");
 	}
 }
 ```
+
+#### 测试
+
+```java
+public class Test{
+	
+	public static void main(String[] args){
+		ConcreteComponent cc = new ConcreteComponent();
+		ConcreteDecoratorA cda = new ConcreteDecoratorA();
+		ConcreteDecoratorB cdb = new ConcreteDecoratorB();
+		cda.setComponent(cc);
+		cdb.setComponent(cda);
+		cdb.operation();
+	}
+}
+```
+
+### 自我理解
+
+　　首先理解继承的是类型，而不是行为，行为主要由装饰者提供。装饰者一定要继承组件的类型，主要是为了满足setComponent(component)，这即是对传入的对象进行装饰，能使得装饰一直进行。感觉装饰者模式的核心思想是将原来的对象进行扩展，在保证基本功能实现的同时动态添加一些额外的职责。而对于全透明的要求，则需要将具体装饰类ConcreteDecorator向上转型声明为Component；半透明则允许声明为ConcreteDecorator类型的，以满足更高的职责需求。
