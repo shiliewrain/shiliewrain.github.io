@@ -2,6 +2,7 @@
 layout : post
 title : 观察者模式
 categories : 设计模式
+tag : 设计模式 后台
 ---
 * content
 {:toc}
