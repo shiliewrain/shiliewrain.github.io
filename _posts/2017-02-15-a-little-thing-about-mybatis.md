@@ -46,7 +46,7 @@ tags: 后台 框架 持久层
 　　网上有特别多的简介，我就懒得搬了。刚发现一个讲解Mybatis的专栏---[传送门](http://blog.csdn.net/column/details/mybatis-principle.html)
 　　
 
-　　在某篇文章[传送门](http://blog.csdn.net/hupanfeng/article/details/9068003/)上截了个图，介绍了Mybatis的整体流程图，如下：
+　　在某篇文章（[传送门](http://blog.csdn.net/hupanfeng/article/details/9068003/)）上截了个图，介绍了Mybatis的整体流程图，如下：
 
 ![Mybatis process](http://img.my.csdn.net/uploads/201306/09/1370783456_4126.JPG)
 
