@@ -56,9 +56,9 @@ tags: 后台 框架 持久层
 
 　　看过之后确实对一些概念有了些认识，可能理解不够深刻。把自己认为的重点记下来。
 　
-　* Mybatis和数据库开启一次对话就会创建一个SqlSession对象，该对象中包含一个Executor执行器，该执行器中存在并维护一个Cache对象。
-　* Mybatis一级缓存只会涉及perpetualCache这一个Cache接口的实现类，其实现原理就是通过HashMap保存缓存信息。
-　* 生命周期：（1）会话开始时，会有新的SqlSession、Executor和PerpetualCache，会话结束则全部释放；（2）SqlSession调用close()方法，会释放PerpetualCache对象；（3）update操作会清空PerpetualCache。
-　* 工作流程：查询操作会访问PerpetualCache，当返回为空时，才会访问数据库，并在缓存之后返回结果。
-　* CacheKey：statementId + rowBounds + sql + JDBC所需要的参数
+* Mybatis和数据库开启一次对话就会创建一个SqlSession对象，该对象中包含一个Executor执行器，该执行器中存在并维护一个Cache对象。
+* Mybatis一级缓存只会涉及perpetualCache这一个Cache接口的实现类，其实现原理就是通过HashMap保存缓存信息。
+* 生命周期：（1）会话开始时，会有新的SqlSession、Executor和PerpetualCache，会话结束则全部释放；（2）SqlSession调用close()方法，会释放PerpetualCache对象；（3）update操作会清空PerpetualCache。
+* 工作流程：查询操作会访问PerpetualCache，当返回为空时，才会访问数据库，并在缓存之后返回结果。
+* CacheKey：statementId + rowBounds + sql + JDBC所需要的参数
 
