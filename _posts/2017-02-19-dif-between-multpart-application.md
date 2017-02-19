@@ -4,8 +4,8 @@ title : "form-data和x-www-form-urlencoded的区别"
 categories : 前端
 tags : 表单编码类型
 ---
-* content
-{toc:}
+*content
+{:toc}
 
 　　之前工作需要使用postman调用外部接口，需要传入相应的参数。postman传参有四种形式：form-data、x-www-form-urlencoded、raw和binary。查阅了一下相互之间的区别，记录一下。
 
