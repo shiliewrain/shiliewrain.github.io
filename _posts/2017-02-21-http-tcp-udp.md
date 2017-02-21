@@ -34,3 +34,10 @@ tags : 网络协议 TCP/IP
 ## HTTP
 
 　　HTTP是基于TCP的协议，发送请求时建立TCP连接，请求结束后，断开连接，被称为短连接。HTTP是无状态的，这表示客户端和服务器互相都不知道对方的状态，比如，在无cookie和Session的情况下，服务器不知道客户端是否完成了登陆。
+
+
+## 参考
+[传送门一](http://blog.chinaunix.net/uid-26833883-id-3627644.html)
+[传送门二](http://www.cnblogs.com/BlueTzar/articles/811160.html)
+[传送门三](http://www.jianshu.com/p/42260a2575f8)
+[传送门四](http://www.cnblogs.com/xhwy/archive/2012/03/03/2378293.html)
