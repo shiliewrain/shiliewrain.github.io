@@ -21,4 +21,4 @@ tags : springMVC spring配置
 
 ## classpath与classpath*
 
-　　在定义application.xml与servlet.xml的位置的时候，经常会出现classpath或者classpath*，尤其是定义application.xml的位置。classpath所指的默认位置为/WEB-INF/classes/，会从其中找出所有的指定配置文件。而classpath*则会找出/WEB-INF/classes/及其子文件夹下的所有指定配置文件，简单来说，就是classpath*会查找得更深一些，当然初始化过程中花费的时间也会更多一下，因此如果清楚配置文件的位置，尽量少用classpath*。另外一种情况，在声明servlet的时候不去指定配置文件的位置，则系统会根据<servlet-name>中的值去查找/WEB-INF/中的<servlet-name>-servlet.xml文件，如果没有，则会报错。
+　　在定义application.xml与servlet.xml的位置的时候，经常会出现classpath或者classpath\*，尤其是定义application.xml的位置。classpath所指的默认位置为/WEB-INF/classes/，会从其中找出所有的指定配置文件。而classpath*则会找出/WEB-INF/classes/及其子文件夹下的所有指定配置文件，简单来说，就是classpath\*会查找得更深一些，当然初始化过程中花费的时间也会更多一下，因此如果清楚配置文件的位置，尽量少用classpath\*。另外一种情况，在声明servlet的时候不去指定配置文件的位置，则系统会根据<servlet-name>中的值去查找/WEB-INF/中的<servlet-name>-servlet.xml文件，如果没有，则会报错。
