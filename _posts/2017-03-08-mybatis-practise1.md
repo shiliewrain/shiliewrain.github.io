@@ -118,7 +118,7 @@ public interface UserDao {
 
 ### 配置文件
 
-　　使用Mybatis需要为每一个如同UserDao.java的接口定义一个对应的配置文件，这里为User.xml，代码如下：
+　　使用Mybatis需要为每一个如同UserDao.java的接口定义一个对应的配置文件，这里为User.xml，该文件与前面定义的接口是对应的，在namespace中要指明该接口，包名必须正确，<select>标签中的id的值则为接口中的方法名，parameterType为该方法接收参数的类型，resultType则为该方法的返回值。<select>标签中的sql语句则为我们需要实现的查找功能，参数通过\#{}传递，代码如下：
 ```xml
 
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -133,7 +133,7 @@ public interface UserDao {
 
 ```
 
-　　最后需要定义Mybatis的配置文件，这里为mybatis-config.xml，代码如下：
+　　最后需要定义Mybatis的配置文件，这里为mybatis-config.xml，<typeAliases>标签中声明的为类的别名，别名的作用是简化引用相应类的操作。如上文的User.xml中的resultType中的User就是使用的别名，如果没有给User声明别名，或者不使用别名，则需要写成`resultType="com.shiliew.model.User"`的形式。parameterType也是如此，如果我们返回的数据类型是User型的，则也可以使用别名或者全称。<environments>中声明了事务和数据源，内容暂时不研究。最后，我们需要在<mappers>中将所有的与Dao接口对应的xml文件引入进来，代码如下：
 
 ```xml
 
