@@ -81,7 +81,7 @@ public class Task {
 
 ### resultMap的实现
 
-　　联合查询中的resultMap相对于之前简单的查找User要复杂一些，复杂的点就在于属性User的定义。这时，就需要使用<association>标签来实现User的定义，<association>中的property指明Task.java实体类中的user属性，javaType则表示user的属性，在<association>标签中继续定义user的属性，将id和name写入，则满足了我们的需求。然后按之前的写法，将getUserTaskList方法实现，代码如下：
+　　联合查询中的resultMap相对于之前简单的查找User要复杂一些，复杂的点就在于属性User的定义。这时，就需要使用<association>标签来实现User的定义，<association>中的property指明Task.java实体类中的user属性，javaType则表示user的属性，在<association>标签中继续定义user的属性，将id和name写入，则满足了我们的需求。代码如下：
 
 ```xml
 
@@ -97,6 +97,35 @@ public class Task {
     </resultMap>
 
     <select id="getUserTaskList" parameterType="int" resultMap="UserTaskList">
+        SELECT user.id, user.name, task.id,task.name,task.content FROM user, task
+        WHERE user.id = task.user_id AND user.id=#{id}
+    </select>
+```
+
+　　对于<association>的定义还有另外一种写法，就是将标签里的属性抽出来，作为一个resultMap定义。这样做的好处是方便复用。示例如下：
+
+```xml
+
+	<resultMap id="UserList" type="User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+    <resultMap id="UserTaskList" type="Task">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+
+        <association property="user" javaType="User" resultMap="UserList"/>
+    </resultMap>
+```
+
+　　在本例中，我直接把之前的resultMap拿来复用，十分方便。最后，将getUserTaskList方法实现，代码如下：
+
+```xml
+
+	<select id="getUserTaskList" parameterType="int" resultMap="UserTaskList">
         SELECT user.id, user.name, task.id,task.name,task.content FROM user, task
         WHERE user.id = task.user_id AND user.id=#{id}
     </select>
