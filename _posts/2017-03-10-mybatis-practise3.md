@@ -1,8 +1,8 @@
 ---
 layout : post
 title : "Mybatis学习笔记（三）--关联查询"
-categories : mybatis
-tags : mybatis 关联查询
+categories : Mybatis
+tags : Mybatis 关联查询
 ---
 
 * content

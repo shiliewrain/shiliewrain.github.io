@@ -1,7 +1,7 @@
 ---
 layout : post
 title : "Mybatis学习笔记（二）--基础CURD"
-categories : mybatis
+categories : Mybatis
 tags : mybatis CURD
 ---
 

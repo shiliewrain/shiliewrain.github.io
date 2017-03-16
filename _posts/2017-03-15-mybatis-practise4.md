@@ -1,8 +1,8 @@
 ---
 layout : post
 title : "Mybatis学习笔记（四）--Mybatis与Spring整合"
-categories : mybatis
-tags : mybatis spring
+categories : Mybatis
+tags : Mybatis Spring
 ---
 * content
 {:toc}
