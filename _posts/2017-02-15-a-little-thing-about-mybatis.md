@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "关于Mybatis的一点笔记"
-categories: 持久层框架
+categories: Mybatis
 tags: 后台 框架 持久层
 ---
 * content
