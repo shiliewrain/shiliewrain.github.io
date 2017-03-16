@@ -130,4 +130,42 @@ tags : mybatis spring
 
 ```
 
+　　配置数据源是为了将数据库连接由Java硬编码转为Spring管理，也能方便地进行事务管理。Spring配置数据源有四种方式，暂时参考这篇文章[Spring中配置数据源的4种形式](http://blog.csdn.net/orclight/article/details/8616103)，因为我参照的教程使用的是dbcp，所以我采用的为dbcp。建立数据源之后，就可以访问数据库了。每一次访问数据库，都会打开一个会话，即session。在之前的测试方法中，我使用了openSession()方法去打开一次会话，访问结束之后使用close()方法将会话关闭。这样的操作很麻烦，还好Spring也将Session进行了管理。因此，我们在application.xml中还要配置sqlSession工厂，这个工厂主要是为我们自动建立一次会话，省去了我们自己编码的麻烦。最后就是配置Mapper工厂，这个工厂是根据Mapper接口提供我们想要的Mapper对象，它封装了之前测试类中用到的session.getMapper()方法。
 
+### 测试
+
+　　写到这里，就可以测试了，测试代码如下：
+
+```java
+
+package com.shiliew.test;
+
+import com.shiliew.dao.UserDao;
+import com.shiliew.model.Task;
+import com.shiliew.model.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
+
+public class MybatisSpringTest {
+
+    private static ApplicationContext ctx = new ClassPathXmlApplicationContext("application.xml");
+
+    public static void main(String [] args){
+        UserDao userDao = (UserDao) ctx.getBean("userMapper");
+        User user = userDao.selectUserByID(1);
+        System.out.println(user.getName());
+        List<Task> taskList = userDao.getUserTaskList(1);
+        for (Task task : taskList){
+            System.out.print(task.getId() + " ");
+            System.out.print(task.getTaskName() + " ");
+            System.out.print(task.getContent() + " ");
+            System.out.println(task.getUser().getName());
+        }
+    }
+}
+
+```
+
+　　在测试过程中，我遇到了一个问题，就是我在User实体和Task实体我都用到了name这个变量名，在获取task的name时，显示的是User的name。最后没办法，只有将task的name修改为taskName。这个问题发生的原因我估计是Mybatis在映射时分不清造成的，等之后对Mybatis的实体映射有足够了解之后再来解释。
