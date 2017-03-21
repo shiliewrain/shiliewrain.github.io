@@ -96,7 +96,7 @@ tags : Mybatis SpringMVC
 
 ```
 
-　　在web.xml文件中，首先定义系统级别的上下文，即在<context-param>中指定application.xml的位置。然后定义Spring上下文监听器，监听各种请求。最后定义请求拦截器并配置需要拦截的请求，“/”表示拦截所有请求。
+　　在web.xml文件中，首先定义系统级别的上下文，即在<context-param>中指定application.xml的位置。然后注册ContextLoaderListenerd，ContextLoaderListener通过读取contextConfigLocation参数来读取配置参数，一般来说它配置的是Spring项目的中间层，服务层组件的注入，装配，AOP。最后定义请求拦截器并配置需要拦截的请求，“/”表示拦截所有请求。
 
 　　最后，配置拦截器的配置文件。需要新建一个xml文件，文件名默认为拦截器名+servlet。代码如下：
 
