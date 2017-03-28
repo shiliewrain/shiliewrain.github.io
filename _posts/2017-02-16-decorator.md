@@ -1,6 +1,6 @@
 ---
 layout : post
-title : 观察者模式
+title : 装饰者模式
 categories : 设计模式
 tags : 设计模式 后台
 ---
