@@ -79,4 +79,74 @@ tags : I/O 批量下载
 
 ### 问题一：下载的文件损坏
 
-　　可以肯定的是，如果程序执行没有报错，而下载的文件已损坏，则肯定是文件下载不完整。而文件不完整，则说明在字节输入流读取源文件或者字节输出流写目标文件有字节丢失或者写入了多余错误的字节。
+　　可以肯定的是，如果程序执行没有报错，而下载的文件已损坏，则肯定是文件下载不完整。而文件不完整，则说明在字节输入流读取源文件或者字节输出流写目标文件有字节丢失或者写入了多余错误的字节。在编写代码的过程中，我用到了两种字节输入输出流的写法，一种是一次读出全部字节，并一次写入输出流，另一种是一次读取指定长度的字节，并写入输出流，循环直至写完所有字节。两种写法如下：
+
+```java
+
+//全部字节一次读，一次写
+byte[] bytes = new byte[inputStream.available()];
+        inputStream.read(bytes);
+        outputStream.write(bytes);
+
+//每次读1024个字节，将读出的字节全部写入，直至所有内容读完写完
+byte[] bytes = new byte[1024];
+            while ((len = in.read(bytes)) != -1){
+                out.write(bytes, 0, len);
+            }
+```
+
+　　我是因为第一种方式下载的文件被损坏，才换了第二种方式，从而获得了正确的结果。结果实验，发现在执行本地java程序进行文件下载时，两种方式都可以获得正确的结果，而在本地的JavaWeb程序进行文件下载时，第一种方式下载的文件不完整，只有1KB，而第二种方式能获得完整正确的文件。通过网上查阅资料，大致得出的结论为：
+　　	在使用read(byte[] b)方法时，该方法最多能读取b.length个字节，但不能保证会读到这么多，特别是在下载非当前服务器中资源的时候，因为网络通讯不够稳定，传输过来的字节可能不全，可能顺序不对，因此就无法保证文件的正确性，下载得到的文件为损坏的文件。通过将文件分组读出，可以降低出错的概率。
+
+## JavaWeb下载Http文件
+
+　　因为Java的I/O流使用了装饰者模式，在java下载文件的基础上修改输入输出流就可以实现JavaWeb下载Http文件。将文件输入流由FileInputStream变为HttpURLConnection.getInputStream()，将文件输出流由FileOutputStream变为response.getOutputStream()。示例代码如下：
+
+```java
+
+public void downloadFile(HttpServletResponse response, String path, String fileName){
+        OutputStream out = null;
+        URL url;
+        InputStream in = null;
+        int len = 0;
+        try{
+            //取得HTTP文件的URL对象
+            url = new URL(path);
+            //获取该URL对象的连接
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            //连接的相关属性设置
+            connection.setConnectTimeout(3 * 1000);
+            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+            //获取该连接的字节输入流
+            in = connection.getInputStream();
+            //设置响应头相关属性
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+            response.setContentType("application/force-download");
+            //获取响应头的字节输出流，装饰为缓冲流提高读写效率
+            out = new BufferedOutputStream(response.getOutputStream());
+            byte[] bytes = new byte[1024];
+            while ((len = in.read(bytes)) != -1){
+                out.write(bytes, 0, len);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null){
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+```
+
+　　基本内容就这些，毕竟Java下载文件的原理简单来说就是，将源文件放入输入流，输入流将文件写到临时数组中，输出流从该临时数组中读出文件，写入目标文件中。
+
+### 问题二：JavaWeb批量下载多个文件，只能得到第一个。
+
+　　对于这个问题，目前我不能确定原因，通过网上的相关解释来看，问题出在response.getOutputStream()中。因为HTTP是无状态的，客户端不知道响应是否结束，是否需要保持连接。所以，当调用了一次response.getOutputStream()方法后，完成了输出流的写入，客户端就认为响应已经结束，那么连接就已断开，则之后的文件就不会被下载下来。
