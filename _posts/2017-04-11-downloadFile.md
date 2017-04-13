@@ -149,4 +149,100 @@ public void downloadFile(HttpServletResponse response, String path, String fileN
 
 ### 问题二：JavaWeb批量下载多个文件，只能得到第一个。
 
-　　对于这个问题，目前我不能确定原因，通过网上的相关解释来看，问题出在response.getOutputStream()中。因为HTTP是无状态的，客户端不知道响应是否结束，是否需要保持连接。所以，当调用了一次response.getOutputStream()方法后，完成了输出流的写入，客户端就认为响应已经结束，那么连接就已断开，则之后的文件就不会被下载下来。
+　　对于这个问题，目前我不能确定原因，通过网上的相关解释来看，问题出在response.getOutputStream()中。因为HTTP是无状态的，客户端不知道响应是否结束，是否需要保持连接。所以，当调用了一次response.getOutputStream()方法后，完成了输出流的写入，客户端就认为响应已经结束，那么连接就已断开，则之后的文件就不会被下载下来。一次request对应一次response，response执行过一次之后，则客户端认为请求已完成，则断开连接。
+
+　　目前要解决这个问题，我能想到的，也是最为通用的方法就是将多个文件打包下载。
+
+## JavaWeb打包下载文件
+
+　　简单说说实现打包下载的过程：
+
+1. 生成一个压缩文件，将其放入文件输出流，然后用压缩输出流装饰。
+
+2. 循环将文件放入输入流，然后通过压缩输出流写入压缩文件。
+
+3. 将压缩输出流关闭，将压缩文件放入输入流，通过response的输出流写出，最后删除服务器上的压缩文件。
+
+　　示例代码如下：
+
+```java
+
+public void downloadHttpFileByZip(HttpServletResponse response, List<String> paths, List<String> fileNames) throws IOException{
+		//需要生成的压缩文件名
+		String fileName = UUID.randomUUID().toString() + ".zip";
+		String outFilePath = "d:" + fileName;
+		//生成该压缩文件
+		File file = new File(outFilePath);
+		FileOutputStream outStream;
+		try {
+			//将压缩文件放入文件输出流
+			outStream = new FileOutputStream(file);
+			//使用压缩输出流装饰文件输出流
+			ZipOutputStream zipStream = new ZipOutputStream(outStream);
+			zipFile(paths, fileNames, zipStream);
+			//一定要先关闭压缩输出流，再使用压缩文件，否则压缩文件会不正确
+			zipStream.close();
+			outStream.close();
+			
+			//同JavaWeb下载文件
+			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file.getPath()));
+			OutputStream os = new BufferedOutputStream(response.getOutputStream());
+			response.setHeader("Content-Disposition", "attachment; filename="+fileName);
+		    response.setContentType("application/force-download");
+		    byte[] bytes = new byte[1024];
+			int len = 0;
+			while((len = bis.read(bytes)) != -1){
+				os.write(bytes, 0, len);
+            }
+			bis.close();
+		    os.flush();
+		    os.close();
+		    //关闭流之后再删除文件，否则会删除失败
+		    file.delete();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//循环获取HTTP文件，并写入压缩输出流
+	private void zipFile(List<String> paths, List<String> fileNames, ZipOutputStream os) throws IOException{
+		URL url;
+		InputStream inputStream = null;
+		for(int i = 0 ; i < paths.size(); i++){
+			url = new URL(paths.get(i));
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		    conn.setConnectTimeout(3*1000);
+		    inputStream = conn.getInputStream();
+		    zipFile(inputStream, os, fileNames.get(i));
+		}
+	}
+	
+	//将输入流中的字节通过压缩输出流写入压缩文件中
+	private void zipFile(InputStream is, ZipOutputStream os, String fileName) throws IOException{
+		if(is != null){
+			BufferedInputStream bis = new BufferedInputStream(is);
+			//压缩包内的文件对象
+			ZipEntry entry = new ZipEntry(fileName);
+			//将该文件对象放入压缩输出流
+			os.putNextEntry(entry);			
+			byte[] bytes = new byte[1024];
+			int len = 0;
+			//将输入流中的字节写入输出流中的文件对象
+			while((len = bis.read(bytes)) != -1){  
+				os.write(bytes, 0, len);  
+            }
+            //写完就关闭流，保证文件的正确性
+			os.closeEntry();
+			bis.close();
+			is.close();
+		}
+	}
+```
+
+### 问题三：下载的压缩包解压报错“不可预料的压缩文件末端”，但是解压出来文件是正确的。
+
+　　这个问题是由于没有正确关闭压缩输出流造成的，并且在使用该压缩文件之前，一定要关闭压缩输出流，否则就无法得到正确的文件。
+
+## 结语
+
+　　通过一次实践，对文件输入输出流有了更全的认识，目前来说，使用是没有多大的问题了。通过理解InputStream(源文件)->bytes[字节数组]->OutputStream(目标文件)，就可以理解Java I/O的使用方法，然后通过各种输入输出流装饰类来满足需求。
