@@ -95,7 +95,7 @@ public static void main(String [] args){
                 list.remove(str);//抛出异常java.util.ConcurrentModificationException
             }
         }
-    ｝
+    }
 ```
 
 　　这样使用会抛出java.util.ConcurrentModificationException。在forEach中，遍历的集合都必须实现Iterable接口（数组除外）。而forEach的写法实际是对Iterator遍历的简写，类似于以下代码：
@@ -140,7 +140,8 @@ final void checkForComodification() {
 　　可以看到在使用next()方法获取下一个元素的之前会先检查迭代器修改次数，在我们使用ArrayList的remove()方法删除元素时，实际只修改了modCount，这样就会造成modCount和expectedModCount不相等，从而抛出异常。而使用迭代器本身的remove()方法则不会，因为Iterator本身的remove()方法会同时修改modCount和expectedModCount。
 
 　　引用一段网上的解释：
-	>Iterator 是工作在一个独立的线程中，并且拥有一个 mutex 锁。 Iterator 被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则 Iterator 会马上抛出 java.util.ConcurrentModificationException 异常。
+
+	Iterator 是工作在一个独立的线程中，并且拥有一个 mutex 锁。 Iterator 被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则 Iterator 会马上抛出 java.util.ConcurrentModificationException 异常。
 
 	所以 Iterator 在工作的时候是不允许被迭代的对象被改变的。但你可以使用 Iterator 本身的方法 remove() 来删除对象， Iterator.remove() 方法会在删除当前迭代对象的同时维护索引的一致性。
 
