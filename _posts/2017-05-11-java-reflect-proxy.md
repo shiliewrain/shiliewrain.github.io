@@ -20,7 +20,7 @@ tags : Java 反射 代理
 #### 获取对象的类名
 
 ```java
-ReflectionTest rt = new ReflectionTest();
+	ReflectionTest rt = new ReflectionTest();
         System.out.println(rt.getClass().getName());
         System.out.println(ReflectionTest.class.getName());
 ```
@@ -30,7 +30,7 @@ ReflectionTest rt = new ReflectionTest();
 #### 获取Class的实例
 
 ```java
-Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest");
+	Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest");
         Class<?> class2 = new ReflectionTest().getClass();
         Class<?> class3 = ReflectionTest.class;
 
@@ -44,7 +44,7 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 获取对象的父类与实现的接口
 
 ```java
-		Class<?> clazz = Class.forName("com.shiliew.function.reflection.ReflectionTest");
+	Class<?> clazz = Class.forName("com.shiliew.function.reflection.ReflectionTest");
         Class<?> parentClass = clazz.getSuperclass();
         System.out.println(parentClass.getName());
 
@@ -57,7 +57,7 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 反射实现实例化
 
 ```java
-		Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
+	Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
         User user = (User) clazz.newInstance();
 ```
 
@@ -66,7 +66,7 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 获取对象的构造函数
 
 ```java
-		Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
+	Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
         Constructor<?> [] constructors = clazz.getConstructors();
         for (Constructor<?> constructor : constructors){
             Class<?> [] classes = constructor.getParameterTypes();
@@ -83,7 +83,7 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 获取一个类的全部属性
 
 ```java
-		Class<?> clazz = Class.forName("com.shiliew.function.reflection.SubUser");
+	Class<?> clazz = Class.forName("com.shiliew.function.reflection.SubUser");
         Field [] fields = clazz.getDeclaredFields();
         for (Field field : fields){
             int mo = field.getModifiers();
@@ -108,7 +108,7 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 在泛型为Integer的ArrayList中存在一个String类型的对象
 
 ```java
-		ArrayList<Integer> list = new ArrayList<Integer>();
+	ArrayList<Integer> list = new ArrayList<Integer>();
         Method method = list.getClass().getMethod("add", Object.class);
         method.invoke(list, "Java反射机制");
         System.out.println(list.get(0));
@@ -119,8 +119,8 @@ Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest"
 #### 通过反射操作数组对象
 
 ```java
-		Object obj = Array.newInstance(String, length);
-		String [] str = (String []) obj; 
+	Object obj = Array.newInstance(String, length);
+	String [] str = (String []) obj; 
 ```
 
 　　使用反射机制生成数组有略微一点不同，就是要使用Array类。通过Array的newInstance方法反射生成一个type类型和length长度的数组对象，然后强制转换。
