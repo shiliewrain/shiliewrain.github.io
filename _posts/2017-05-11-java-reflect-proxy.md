@@ -20,7 +20,7 @@ tags : Java 反射 代理
 #### 获取对象的类名
 
 ```java
-		ReflectionTest rt = new ReflectionTest();
+ReflectionTest rt = new ReflectionTest();
         System.out.println(rt.getClass().getName());
         System.out.println(ReflectionTest.class.getName());
 ```
@@ -30,7 +30,7 @@ tags : Java 反射 代理
 #### 获取Class的实例
 
 ```java
-		Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest");
+Class<?> class1 = Class.forName("com.shiliew.function.reflection.ReflectionTest");
         Class<?> class2 = new ReflectionTest().getClass();
         Class<?> class3 = ReflectionTest.class;
 
@@ -44,7 +44,7 @@ tags : Java 反射 代理
 #### 获取对象的父类与实现的接口
 
 ```java
-Class<?> clazz = Class.forName("com.shiliew.function.reflection.ReflectionTest");
+		Class<?> clazz = Class.forName("com.shiliew.function.reflection.ReflectionTest");
         Class<?> parentClass = clazz.getSuperclass();
         System.out.println(parentClass.getName());
 
@@ -57,7 +57,7 @@ Class<?> clazz = Class.forName("com.shiliew.function.reflection.ReflectionTest")
 #### 反射实现实例化
 
 ```java
-Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
+		Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
         User user = (User) clazz.newInstance();
 ```
 
@@ -66,7 +66,7 @@ Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
 #### 获取对象的构造函数
 
 ```java
-Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
+		Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
         Constructor<?> [] constructors = clazz.getConstructors();
         for (Constructor<?> constructor : constructors){
             Class<?> [] classes = constructor.getParameterTypes();
@@ -83,7 +83,7 @@ Class<?> clazz = Class.forName("com.shiliew.function.reflection.User");
 #### 获取一个类的全部属性
 
 ```java
-Class<?> clazz = Class.forName("com.shiliew.function.reflection.SubUser");
+		Class<?> clazz = Class.forName("com.shiliew.function.reflection.SubUser");
         Field [] fields = clazz.getDeclaredFields();
         for (Field field : fields){
             int mo = field.getModifiers();
@@ -108,7 +108,7 @@ Class<?> clazz = Class.forName("com.shiliew.function.reflection.SubUser");
 #### 在泛型为Integer的ArrayList中存在一个String类型的对象
 
 ```java
-ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
         Method method = list.getClass().getMethod("add", Object.class);
         method.invoke(list, "Java反射机制");
         System.out.println(list.get(0));
@@ -177,13 +177,13 @@ public class Main {
 
 　　要使用动态代理，需要实现InvocationHandler接口，这个接口中只定义了一个public方法invoke，该方法接受三个参数：Object、Method和Object[]，返回一个Object对象。第一个参数一般指代理类，第二个参数指被代理的方法，第三个参数为被代理方法的参数数组。实现动态代理的步骤如下：
 
-	1. 创建一个实现了接口InvocationHandler的类，并且实现invoke方法；
+1. 创建一个实现了接口InvocationHandler的类，并且实现invoke方法；
 
-	2. 创建被代理的类以及相应的接口；
+2. 创建被代理的类以及相应的接口；
 
-	3. 调用Proxy类中的静态方法newProxyInstance(ClassLoader loader,Class[] interfaces,InvocationHandler h)，创建出一个代理类；
+3. 调用Proxy类中的静态方法newProxyInstance(ClassLoader loader,Class[] interfaces,InvocationHandler h)，创建出一个代理类；
 
-	4. 通过代理类调用被代理的方法。
+4. 通过代理类调用被代理的方法。
 
 	示例代码如下：
 
