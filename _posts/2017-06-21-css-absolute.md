@@ -33,7 +33,7 @@ tags : CSS 前端 绝对定位
 </div>
 ```
 
-![1]()
+![1](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/css_absolute1.png?raw=true)
 
 ### 高度欺骗
 
@@ -46,7 +46,7 @@ tags : CSS 前端 绝对定位
 </div>
 ```
 
-![2]()
+![2](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/css_absolute2.png?raw=true)
 
 ### 定位
 
@@ -59,7 +59,7 @@ tags : CSS 前端 绝对定位
 </div>
 ```
 
-![3]()
+![3](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/css_absolute3.png?raw=true)
 
 　　根据上图可以知道，相对定位是相对与自己在文档流中的位置偏移，绝对定位则已跳出了文档流，按left、top、right、bottom定位在相应的窗口位置，没有设置的坐标则依据文档流的位置去默认设置。值得一提的是，如果父元素设置了相对定位，那么绝对定位的子元素就只能相对父元素去定位了。
 
