@@ -1,8 +1,8 @@
 ---
 layout : post
 title : "List.remove()的使用注意"
-categories : java
-tags : java异常 数组循环删除
+categories : Java
+tags : Java异常 数组循环删除
 ---
 
 * content
