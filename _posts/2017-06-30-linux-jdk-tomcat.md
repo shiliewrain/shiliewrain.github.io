@@ -19,7 +19,7 @@ tags : Linux JDK Tomcat
 
 　　呈呈大神说新手最好使用ubuntu这个版本，那就选这个版本吧。那查看自己使用的Linux版本的呢？查看内核版本可用：(1)cat /proc/version;(2)uname -a;(3)uname -r。查看Linux版本可用：(1)lsb_release -a;(2)cat /etc/issue。如下图：
 
-![查看Linux内核和版本](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/Linux_version1.png)
+![查看Linux内核和版本](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/Linux_version1.png?raw=true)
 
 　　当然，Linux博大精深，肯定还有很多其他的方式可以查询，而关于命令的参数，可以使用man命令自己查看一下。
 
@@ -27,15 +27,15 @@ tags : Linux JDK Tomcat
 
 　　先使用'java -version'命令查看本机是否安装了JDK，如果已安装了，可以先卸载。如果是apt方式安装，就需要使用apt方式卸载，如果是自己解压安装，就直接去删除相应的文件夹。另外注意需要删除/etc/profile相应的设置。
 
-![查看和卸载JDK](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt%E5%8D%B8%E8%BD%BDjdk.png)
+![查看和卸载JDK](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt_uninstall_jdk.png?raw=true)
 
 　　当Linux未安装JDK时，使用java命令，会有如下提示：
 
-![使用java命令](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/java%E5%91%BD%E4%BB%A4.png)
+![使用java命令](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/java_commod.png?raw=true)
 
 　　在ubuntu中，会有一些相关软件提示，而centos中没有，其他的版本暂时不考虑。我们可以使用apt install <software package>来安装相关软件。如果出现下图的错误，可以先使用一次apt update命令。
 
-![apt install无法安装1](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt%20install%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%851.png)
+![apt install无法安装1](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt_install_can_not_install1.png?raw=true)
 
 　　apt update命令会更新软件源，然后再安装，就OK了。安装完成后就可以使用java命令了。然后，将jdk的安装路径加入到JAVA_HOME中。使用vi /etc/profile命令，在文件最后加入JAVA_HOME：
 
@@ -53,11 +53,11 @@ export JAVA_HOME CLASSPATH PATH
 
 　　先去Apache官网去获取tomcat的包地址，或者也可以自己下载后传到Linux上。建议获取地址，直接用wget命令直接下载到Linux上。
 
-![下载tomcat](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/%E4%B8%8B%E8%BD%BDtomcat.png)
+![下载tomcat](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/downloadtomcat.png?raw=true)
 
 　　然后使用tar命令解压下载的tar.gz的tomcat包，如果是zip，需要使用unzip解压。
 
-![解压tomcat](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/%E8%A7%A3%E5%8E%8Btomcat.png)
+![解压tomcat](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/unzip_tomcat.png?raw=true)
 
 　　可以使用mv将解压后的tomcat文件夹名修改为tomcat，简短一点的文件名更方便使用。
 
@@ -77,18 +77,18 @@ export CATALINA_HOME
 
 　　使用source /etc/profile命令使配置生效，可以使用export命令查看命令是否生效。
 
-![检查tomcat配置](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/%E6%A3%80%E6%9F%A5tomcat%E9%85%8D%E7%BD%AE.png)
+![检查tomcat配置](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/check_tomcat.png?raw=true)
 
 　　然后修改tomcat文件夹bin中的catalina.sh文件，在其中加入jdk的路径。
 ```xml
 vi $CATALINA_HOME/bin/catalina.sh
 ```
 
-![tomcat加入jdk路径](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat%E5%8A%A0%E5%85%A5jdk%E8%B7%AF%E5%BE%84.png)
+![tomcat加入jdk路径](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat_add_jdk_path.png?raw=true)
 
 　　退出保存，然后使用$CATALINA_HOME/bin/catalina.sh start启动tomcat服务，在浏览器上输入对应的Linux服务器地址，默认端口8080访问tomcat服务器首页。
 
-![tomcat首页](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat%E9%A6%96%E9%A1%B5.png)
+![tomcat首页](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat_index.png?raw=true)
 
 　　如果访问不成功，原因可能有很多种，比如：
 
