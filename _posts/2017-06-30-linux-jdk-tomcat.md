@@ -39,7 +39,7 @@ tags : Linux JDK Tomcat
 
 　　apt update命令会更新软件源，然后再安装，就OK了。安装完成后就可以使用java命令了。然后，将jdk的安装路径加入到JAVA_HOME中。使用vi /etc/profile命令，在文件最后加入JAVA_HOME：
 
-```txt
+```xml
 #set java environment
 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 PATH=$PATH:$JAVA_HOME/bin
@@ -61,13 +61,13 @@ export JAVA_HOME CLASSPATH PATH
 
 　　可以使用mv将解压后的tomcat文件夹名修改为tomcat，简短一点的文件名更方便使用。
 
-```txt
+```xml
 mv apache-tomcat-8.5.16 tomcat
 ```
 
 　　然后将tomcat的路径加入到环境变量中，以便后面使用。
 
-```txt
+```xml
 vi /etc/profile
 
 #tomcat
@@ -80,7 +80,7 @@ export CATALINA_HOME
 ![检查tomcat配置](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/%E6%A3%80%E6%9F%A5tomcat%E9%85%8D%E7%BD%AE.png)
 
 　　然后修改tomcat文件夹bin中的catalina.sh文件，在其中加入jdk的路径。
-```txt
+```xml
 vi $CATALINA_HOME/bin
 ```
 
