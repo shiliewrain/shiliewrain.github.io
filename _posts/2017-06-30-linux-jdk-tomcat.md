@@ -81,7 +81,7 @@ export CATALINA_HOME
 
 　　然后修改tomcat文件夹bin中的catalina.sh文件，在其中加入jdk的路径。
 ```xml
-vi $CATALINA_HOME/bin
+vi $CATALINA_HOME/bin/catalina.sh
 ```
 
 ![tomcat加入jdk路径](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat%E5%8A%A0%E5%85%A5jdk%E8%B7%AF%E5%BE%84.png)
