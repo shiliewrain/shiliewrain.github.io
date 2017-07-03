@@ -27,9 +27,9 @@ tags : Linux ubuntu nginx
 
 　　* apt install gcc
 
-　　* apt install libpcre3
+　　* apt install libpcre3 libprce3-dev
 
-　　* apt install zlib1g
+　　* apt install zlib1g zlib1g-dev
 
 　　* apt install openssl
 
