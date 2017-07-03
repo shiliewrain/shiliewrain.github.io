@@ -33,7 +33,7 @@ tags : Linux ubuntu nginx
 
 　　* apt install openssl
 
-　　安装了以上依赖包之后，可以使用'wget &lt;url&gt;'或者'apt source nginx'来下载nginx源码包，然后使用tar命令解压，解压之后，进入到解压的nginx文件夹中，使用'./configure'命令配置环境变量，然后使用'make'和'make install'完成安装。最后执行'/usr/local/nginx/sbin/nginx -t'测试nginx是否正常工作，使用'/usr/local/nginx/sbin/nginx'启动nginx，访问该服务器地址的80端口，如果出现nginx的欢迎页面则启动成功。
+　　安装了以上依赖包之后，可以使用'wget &lt;url&gt;'或者'apt source nginx'来下载nginx源码包，然后使用tar命令解压，解压之后，进入到解压的nginx文件夹中，使用'./configure'命令配置环境变量，然后使用'make'和'make install'完成安装。最后执行'./usr/local/nginx/sbin/nginx -t'测试nginx是否正常工作，使用'./usr/local/nginx/sbin/nginx'启动nginx，访问该服务器地址的80端口，如果出现nginx的欢迎页面则启动成功。
 
 
 ### nginx卸载
