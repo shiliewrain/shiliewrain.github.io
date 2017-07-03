@@ -17,7 +17,7 @@ tags : Linux ubuntu nginx
 
 ### apt install安装
 
-　　这是在ubuntu中安装nginx最简单的方法，直接使用apt install nginx命令进行安装，在服务器可以访问网络的情况下就推荐使用这种方式。
+　　这是在ubuntu中安装nginx最简单的方法，直接使用'apt install nginx'命令进行安装，在服务器可以访问网络的情况下就推荐使用这种方式。
 
 ![apt_install_nginx](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt_install_nginx.png?raw=true)
 
@@ -33,16 +33,16 @@ tags : Linux ubuntu nginx
 
 　　* apt install openssl
 
-　　安装了以上依赖包之后，可以使用wget &lt;url&gt;或者apt source nginx来下载nginx源码包，然后使用tar命令解压，解压之后，进入到解压的nginx文件夹中，使用./configure命令配置环境变量，然后使用make和make install完成安装。最后执行/usr/local/nginx/sbin/nginx -t测试nginx是否正常工作，使用/usr/local/nginx/sbin/nginx启动nginx，访问该服务器地址的80端口，如果出现nginx的欢迎页面则启动成功。
+　　安装了以上依赖包之后，可以使用'wget &lt;url&gt;'或者'apt source nginx'来下载nginx源码包，然后使用tar命令解压，解压之后，进入到解压的nginx文件夹中，使用'./configure'命令配置环境变量，然后使用'make'和'make install'完成安装。最后执行'/usr/local/nginx/sbin/nginx -t'测试nginx是否正常工作，使用'/usr/local/nginx/sbin/nginx'启动nginx，访问该服务器地址的80端口，如果出现nginx的欢迎页面则启动成功。
 
 
 ### nginx卸载
 
 　　不同的安装方式需要不同的卸载方式：
 
-　　1. apt install安装：使用apt remove nginx*命令卸载所有nginx软件，并随后使用apt autoremove方法。有时候，如果再安装nginx报错，可能是由于之前卸载不完整，可以使用apt purge nginx*命令，然后再执行apt autoremove。
+　　1. apt install安装：使用'apt remove nginx*'命令卸载所有nginx软件，并随后使用'apt autoremove'方法。有时候，如果再安装nginx报错，可能是由于之前卸载不完整，可以使用'apt purge nginx*'命令，然后再执行'apt autoremove'。
 
-　　2. nginx源码安装：如果nginx正在工作，就先关闭nginx。然后找到nginx文件夹，将其使用rm -rf命令全部删除。
+　　2. nginx源码安装：如果nginx正在工作，就先关闭nginx。然后找到nginx文件夹，将其使用'rm -rf'命令全部删除。
 
 ### 参考
 
@@ -52,7 +52,7 @@ tags : Linux ubuntu nginx
 
 [Ubuntu下安装Nginx详细步骤](http://www.cnblogs.com/hzh19870110/p/6100674.html)
 
-[170217、nginx 安装时候报错：make: *** No rule to make target `build', needed by `default'. Stop.](http://www.cnblogs.com/zrbfree/p/6419043.html)
+[170217、nginx 安装时候报错：make: *** No rule to make target	&acute;build', needed by  	&acute;default'. Stop.](http://www.cnblogs.com/zrbfree/p/6419043.html)
 
 [apt-get命令详解(中文),以及实例](http://blog.51yip.com/linux/1176.html)
 
