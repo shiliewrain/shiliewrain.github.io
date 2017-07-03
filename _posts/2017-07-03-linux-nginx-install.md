@@ -19,7 +19,7 @@ tags : Linux ubuntu nginx
 
 　　这是在ubuntu中安装nginx最简单的方法，直接使用apt install nginx命令进行安装，在服务器可以访问网络的情况下就推荐使用这种方式。
 
-![apt_install_nginx]()
+![apt_install_nginx](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/apt_install_nginx.png?raw=true)
 
 ### nginx源码安装
 
