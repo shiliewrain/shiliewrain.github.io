@@ -42,11 +42,11 @@ tags : Maven
 
 　　一个最简单的pom.xml文件就如上所示，里面标明坐标的三个标签为：groupId、artifactId和version。
 
-　　* groupId：定义当前Maven项目所属的实际项目。例如一个公司名为“fire”，其拥有一个实际项目名为“light”，那就可以定义此Maven项目的groupId为“com.fire.light”。
+* groupId：定义当前Maven项目所属的实际项目。例如一个公司名为“fire”，其拥有一个实际项目名为“light”，那就可以定义此Maven项目的groupId为“com.fire.light”。
 
-　　* artifactId：定义实际项目中的一个Maven项目。例如在实际项目light中有一个名为“demo”的Maven项目，则定义次Maven项目的artifactId为“light-demo”。
+* artifactId：定义实际项目中的一个Maven项目。例如在实际项目light中有一个名为“demo”的Maven项目，则定义次Maven项目的artifactId为“light-demo”。
 
-　　* version：定义Maven项目当前的版本，含有“SNAPSHOT”的代表快照版本，即不稳定版本。而纯数字或者含有“released”代表稳定版本。
+* version：定义Maven项目当前的版本，含有“SNAPSHOT”的代表快照版本，即不稳定版本。而纯数字或者含有“released”代表稳定版本。
 
 　　在Maven中，约定大于配置。关于上面的关于项目坐标的配置也都是约定俗成的，你也可以不按照约定去配置，坏处可能就是没那么直观表示该Maven项目的身份和版本状态。另外，packaging这个标签也需要注意一下，它表示Maven项目打包的方式，常用的有war、jar和pom，更多详细的内容可以自行百度。
 
@@ -77,13 +77,13 @@ tags : Maven
 
 　　在平常的工作中，最常用的命令可能也就clean、package、test、install和deploy这几个，我目前用得最多的也就clean、package和deploy这三个命令。
 
-　　* clean：清空项目中的target目录中的内容。
+* clean：清空项目中的target目录中的内容。
 
-　　* package：给项目打包。
+* package：给项目打包。
 
-　　* deploy：将项目部署到远程仓库。
+* deploy：将项目部署到远程仓库。
 
-　　* install：将项目部署到本地仓库。
+* install：将项目部署到本地仓库。
 
 　　Maven中的所有命令是按照生命周期来执行的，分为三段：clean、default和sit。执行package会把本段内在其之前的所有命令都执行一遍。比如在default阶段，test在package之前，则执行package时，也会执行test。当然，test是一个可以跳过的步骤，还有一些步骤是不能跳过的，如compile。
 
