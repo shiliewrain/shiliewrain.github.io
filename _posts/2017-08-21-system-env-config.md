@@ -19,7 +19,7 @@ tags : maven 多环境 配置文件
 
 　　在tomcat的配置中加入```-Dglobal.config.path="{配置文件路径}"```，那么tomcat启动之后，在系统的环境变量中就会出现global.config.path这个变量。通过System.getProperty("global.config.path")读取该变量，就能获得配置文件的路径。然后就该文件转为文件输入流，通过Properties类的load(inputStream)方法就能将配置的变量放入内存中读取。
 
-!(tomcat中声明配置)[https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat_var_config.png?raw=true]
+![tomcat中声明配置](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/tomcat_var_config.png?raw=true)
 
 #### 在pom中声明配置
 
