@@ -7,7 +7,7 @@
 
 # Site settings
 title: Shiliew
-brief-intro: Want to be an Engineer
+brief-intro: 植树人
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://shiliewrain.github.io" # the base hostname & protocol for your site
 
@@ -18,7 +18,7 @@ github_username:  shiliewrain
 email: 704091119@qq.com
 #weibo_username: 3115521wh
 
-description_footer: 一条漫长的路！
+description_footer: 钱少事多离家远，位低权轻责任重
 # comments
 # two ways to comment, only choose one, and use your own short name
 # 两种评论插件，选一个就好了，使用自己的 short_name
