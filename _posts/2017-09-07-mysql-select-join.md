@@ -18,8 +18,8 @@ tags : Mysql select join
 
 　　在需要同时查询两个或者更多表的数据的时候，就需要使用join去连接不同的表。而连接分为内连接（inner join）和外连接（outer join），外连接又分为右外连接（right [outer] join）和左外连接（left [outer] join），通过关键字on来建立连接条件。具体的解释看看前面的参考，应该就能理解得差不多了，那下面就只举一些例子吧。存在一张水果表和一张水果种类表，表内容如下：
 
-!(水果表)[https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/select-join-table1.png?raw=true]
-!(水果种类表)[https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/select-join-table2.png?raw=true]
+![水果表](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/select-join-table1.png?raw=true)
+![水果种类表](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/select-join-table2.png?raw=true)
 
 #### 内连接
 
