@@ -2,7 +2,7 @@
 layout : post
 title : "项目搭建问题（一）"
 category : JavaWeb
-tags : 项目实战 Java Maven
+tags : 项目实战 resources scm
 ---
 * content
 {:toc}
