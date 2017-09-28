@@ -54,10 +54,8 @@ tags : 项目实战 buildNumber jdk1.5
 　　在使用Maven update项目之后，其中一个项目的jdk由1.7变为了1.5，造成项目报错。去网上查找，发现该问题挺常见的。产生问题的原因，我就直接贴在下面了。
 
 > Maven官方文档有如下描述：
-
-> 编译器插件用来编译项目的源文件.从3.0版本开始, 用来编译Java源文件的默认编译器是javax.tools.JavaCompiler (如果你是用的是java 1.6) . 如果你想强制性的让插件使用javac,你必须配置插件选项 forceJavacCompilerUse. 同时需要注意的是目前source选项和target 选项的默认设置都是1.5, 与运行Maven时的JDK版本无关.如果你想要改变这些默认设置, 可以参考 Setting the -source and -target of the Java Compiler中的描述来设置 source 和target 选项。
-
-> 这是Maven已知的一个特性。除非在你的POM文件中显示的指定一个版本，否则会使用编译器默认的source/target版本1.5。主要还是在于Eclipse中Maven的集成方式起到了关键作用, 它会从POM文件中生成项目的.project,.classpath以及.settings, 因此除非POM文件指定了正确的JDK版本, 否则你每次更新项目配置的时候它都会重置到1.5版本。
+> 　　编译器插件用来编译项目的源文件.从3.0版本开始, 用来编译Java源文件的默认编译器是javax.tools.JavaCompiler (如果你是用的是java 1.6) . 如果你想强制性的让插件使用javac,你必须配置插件选项 forceJavacCompilerUse. 同时需要注意的是目前source选项和target 选项的默认设置都是1.5, 与运行Maven时的JDK版本无关.如果你想要改变这些默认设置, 可以参考 Setting the -source and -target of the Java Compiler中的描述来设置 source 和target 选项。
+> 　　这是Maven已知的一个特性。除非在你的POM文件中显示的指定一个版本，否则会使用编译器默认的source/target版本1.5。主要还是在于Eclipse中Maven的集成方式起到了关键作用, 它会从POM文件中生成项目的.project,.classpath以及.settings, 因此除非POM文件指定了正确的JDK版本, 否则你每次更新项目配置的时候它都会重置到1.5版本。
 
 　　如果使用的Maven版本为3.0，那么有三种方式来解决。
 
