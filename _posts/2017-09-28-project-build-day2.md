@@ -61,7 +61,7 @@ tags : 项目实战 buildNumber jdk1.5
 
 　　如果使用的Maven版本为3.0，那么有三种方式来解决。
 
-*1. 在项目的pom文件中使用maven-compiler-plugin插件，配置如下：
+*1. 在项目的pom文件中使用maven-compiler-plugin插件，配置如下：（实测通过）
 
 ```xml
 <build>
@@ -79,7 +79,7 @@ tags : 项目实战 buildNumber jdk1.5
 	</build>
 ```
 
-*2. 在项目的pom文件中加入如下属性：
+*2. 在项目的pom文件中加入如下属性：（实测properties标签报错）
 
 ```xml
 <properties>  
@@ -88,7 +88,7 @@ tags : 项目实战 buildNumber jdk1.5
 </properties>
 ```
 
-*3. 修改setting文件，加入或者修改其中关于jdk的配置：
+*3. 修改setting文件，加入或者修改其中关于jdk的配置：（实测通过）
 
 ```xml
 <profile>
