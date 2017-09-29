@@ -16,7 +16,7 @@ tags : 项目实战 Spring mybatis
 
 　　贴一点关键的错误信息：
 
-```txt
+```
 No qualifying bean of type [com.xxx.mybatis.dao.IXXXDao] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
 ```
 
@@ -56,7 +56,7 @@ public interface IXXXDao {
 
 　　在mybatis-config.xml文件中使用了别名配置，以免在dao的mapper.xml文件中写类的全名。报错如下：
 
-```txt
+```
 The content of element type "configuration" must match "(properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,plugins?,environments?,databaseIdProvider?,mappers?)".
 ```
 
