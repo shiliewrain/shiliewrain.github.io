@@ -79,7 +79,7 @@ tags : 项目实战 buildNumber jdk1.5
 	</build>
 ```
 
-*2. 在项目的pom文件中加入如下属性：（实测properties标签报错）
+*2. 在项目的pom文件中加入如下属性：（实测通过）
 
 ```xml
 <properties>  
