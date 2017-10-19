@@ -19,7 +19,7 @@ tags : mybatis CURD
 
 　　就我目前了解来说，在Mybatis中，对于数据库的CURD操作主要涉及两个文件，一个是定义CURD方法的接口，另一个就是实现CURD的sql语句的xml文件。在xml文件mapper标签的namespace中指定对应的接口就行，包名和接口名都必须一致。
 
-　　然后就说明一下resultMap，与resultType对比区别一下。简单理解，resultType直接表示返回的类型，而resultMap表示返回的集合，而集合里元素的类型则由外部文件定义。在本文示例中，resultType返回的是User，而resultMap返回的List&lt;User&gt;，两者不可同时出现。关于更详细的对比，可以参考[Mybatis中的resultType和resultMap](http://blog.csdn.net/woshixuye/article/details/27521071)。
+　　然后就说明一下resultMap，与resultType对比区别一下。返回的数据类型由xml和dao文件里的方法共同决定，mybatis会将返回的数据放在一个map里，然后去映射resultType或者resultMap。返回值如果是多个对象，而方法只返回一个非list值，则会报错。resultMap更多用于联合查询，仅仅而已。两者不可同时出现。关于更详细的对比，可以参考[Mybatis中的resultType和resultMap](http://blog.csdn.net/woshixuye/article/details/27521071)。
 
 　　在resultMap中可以定义type和id，type指定集合元素中的类型，id留给外部引用。然后就在resultMap标签中定义相应的属性。示例如下：
 
@@ -48,7 +48,13 @@ tags : mybatis CURD
 	</select>
 ```
 
-　　因为id是User的主键，所以按id查找需要返回User，而查询User表中全部的User，需要返回的是一个list。两者的不同体现在resutlType和resultMap上面，其实resultType是将resultMap中的元素直接映射到了User对象上。
+　　上面两个查询都可以使用```resultType="User"```和```resultMap="UserList"```，因为它们只是数据与对象属性的映射，其实resultType是将resultMap中的元素直接映射到了User对象上，方法的返回值才决定是对象还是对象list。resultMap主要用于复杂的联合查询，举例：存在一个Task类，描述任务内容和执行任务的人，那么查询任务要求查询出对应的User信息。只是举例说明resultMap大概用于哪些方面多一些，没有绝对。
+
+```xml
+<resultMap type="Task" id="TaskMap">
+    <association property="user" select="selectUserByID" column="user" javaType="User"/>
+</resultMap>
+```
 
 ### 插入
 
