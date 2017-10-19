@@ -17,11 +17,11 @@ tags : mybatis CURD
 
 ## Mybatis CURD
 
-　　就我目前了解来说，在Mybatis中，对于数据库的CURD操作主要涉及两个文件，一个是定义CURD方法的接口，另一个就是实现CURD的sql语句的xml文件。在xml文件<mapper>标签的namespace中指定对应的接口就行，包名和接口名都必须一致。
+　　就我目前了解来说，在Mybatis中，对于数据库的CURD操作主要涉及两个文件，一个是定义CURD方法的接口，另一个就是实现CURD的sql语句的xml文件。在xml文件mapper标签的namespace中指定对应的接口就行，包名和接口名都必须一致。
 
-　　然后就说明一下<resultMap>，与<resultType>对比区别一下。简单理解，<resultType>直接表示返回的类型，而<resultMap>表示返回的集合，而集合里元素的类型则由外部文件定义。在本文示例中，<resultType>返回的是User，而<resultMap>返回的List<User>，两者不可同时出现。关于更详细的对比，可以参考[Mybatis中的resultType和resultMap](http://blog.csdn.net/woshixuye/article/details/27521071)。
+　　然后就说明一下resultMap，与resultType对比区别一下。简单理解，resultType直接表示返回的类型，而resultMap表示返回的集合，而集合里元素的类型则由外部文件定义。在本文示例中，resultType返回的是User，而resultMap返回的List&lt;User&gt;，两者不可同时出现。关于更详细的对比，可以参考[Mybatis中的resultType和resultMap](http://blog.csdn.net/woshixuye/article/details/27521071)。
 
-　　在<resultMap>中可以定义type和id，type指定集合元素中的类型，id留给外部引用。然后就在<resultMap>标签中定义相应的属性。示例如下：
+　　在resultMap中可以定义type和id，type指定集合元素中的类型，id留给外部引用。然后就在resultMap标签中定义相应的属性。示例如下：
 
 ```xml
 	<resultMap id="UserList" type="User">
