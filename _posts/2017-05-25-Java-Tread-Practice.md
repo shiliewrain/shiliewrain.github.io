@@ -45,7 +45,19 @@ tags : Java Thread 线程
 
 ### wait()和notify()
 
-　　wait()阻塞当前线程，notify()唤醒阻塞队列中的线程。（未完待续）
+　　wait()阻塞当前线程，notify()唤醒阻塞队列中的线程。在Object对象中，通过wait()、notify()和notifyAll()这几个方法来实现线程间的通信。总共5个方法必须都在同步块或者同步方法中执行，这是因为调用某个对象的这些方法必须获得该对象的锁。
+
+#### wait()
+
+　　wait()方法会阻塞当前的线程，直至被该线程被唤醒或者中断。在调用该方法之前，必须获得该对象的锁，否则抛出IllegalMonitorStateException异常。
+
+　　在调用wait()方法后，锁就被释放了。因此wait()后面的代码直到被唤醒或者中断才有可能继续执行。
+
+#### notify()和notifyAll()
+
+　　这两个方法的作用都是唤醒阻塞的线程，差别在于后者唤醒全部阻塞中的线程。同样，如果调用该方法时没有获得当前对象的锁，则抛出IllegalMonitorStateException异常。
+
+　　值得注意的是，notify不会立刻释放掉锁，它只是唤醒了某个线程，让该线程等待其退出同步块或者同步方法之后才获得该对象锁，notifyAll则是让所有被唤醒的线程去竞争该对象锁。
 
 ### 锁对象
 
@@ -121,3 +133,7 @@ class  Data{
     }
 }
 ```
+
+### 参考
+
+[【Java并发编程】之十：使用wait/notify/notifyAll实现线程间通信的几点重要说明](http://blog.csdn.net/ns_code/article/details/17225469)
