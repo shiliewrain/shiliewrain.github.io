@@ -40,11 +40,12 @@
     </script>
 {% endif %}
 
+{% if site.growingIO_id %}
 <script type='text/javascript'>
       var _vds = _vds || [];
       window._vds = _vds;
       (function(){
-        _vds.push(['setAccountId', '92015fb765715b92']);
+        _vds.push(['setAccountId', '{{site.growingIO_id}}']);
         (function() {
           var vds = document.createElement('script');
           vds.type='text/javascript';
@@ -55,4 +56,5 @@
         })();
       })();
   </script>
+  {% endif %}
 </head>
