@@ -23,7 +23,7 @@ tags : Mysql select having
 
 ![fruit表内容](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/select-groupby-table.png?raw=true)
 
-　　having只要是对group by的分组结果进行筛选，例如，筛选出水果种类不止一种的产地。
+　　having主要是对group by的分组结果进行筛选，例如，筛选出水果种类不止一种的产地。
 
 ```sql
 SELECT COUNT(name) AS 水果种类, product_place as 产地 from fruit GROUP BY product_place HAVING COUNT(name) > 1;
