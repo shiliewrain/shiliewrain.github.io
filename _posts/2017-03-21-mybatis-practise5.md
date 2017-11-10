@@ -60,7 +60,7 @@ tags : Mybatis SpringMVC
 
 ```
 
-　　我将此次整合SpringMVC中在pom.xml文件中增加的内容全部写了出来，后面就不需要再贴了。引入的jstl是为了支持JSP使用jstl标签库，而<build>标签中的<resources>是为了解决与dao对应的mapper.xml文件不写在resources文件夹而不编译的问题。
+　　我将此次整合SpringMVC中在pom.xml文件中增加的内容全部写了出来，后面就不需要再贴了。引入的jstl是为了支持JSP使用jstl标签库，而build标签中的&lt;resources&gt;是为了解决与dao对应的mapper.xml文件不写在resources文件夹而不编译的问题。
 
 　　然后就去web.xml配置拦截器，整体的内容如下：
 
