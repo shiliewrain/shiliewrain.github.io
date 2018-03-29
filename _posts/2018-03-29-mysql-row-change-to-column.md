@@ -38,7 +38,7 @@ VALUES
 ('张三', '英语', 93);
 ```
 
-![score表](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/smysql-row-change-to-column-score-table.png?raw=true)
+![score表](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/mysql-row-change-to-column-score-table.png?raw=true)
 
 　　这时，如果我需要查询李四的所有科目的成绩，因为表里存了李四的三条记录，所以查询结果为三条。
 
@@ -46,13 +46,13 @@ VALUES
 SELECT * FROM score WHERE studentName = '李四';
 ```
 
-![select1](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/smysql-row-change-to-column-score-select1.png?raw=true)
+![select1](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/mysql-row-change-to-column-score-select1.png?raw=true)
 
 #### mysql行转列
 
 　　上面的查询结果完全正确，但是某些时候，这样的结果不太好被程序处理。为了处理李四的成绩，程序需要使用循环来处理三条记录。如果这三条记录合并成一个记录，那么程序处理就方便很多了。
 
-![select2](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/smysql-row-change-to-column-score-select2.png?raw=true)
+![select2](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/mysql-row-change-to-column-score-select2.png?raw=true)
 
 　　如上图所示，这样，查询李四的成绩，就只有一行记录。sql如下：
 
@@ -98,7 +98,7 @@ GROUP BY
 	studentName;
 ```
 
-![select3](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/smysql-row-change-to-column-score-select3.png?raw=true)
+![select3](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/mysql-row-change-to-column-score-select3.png?raw=true)
 
 　　看了上面的查询结果，很明显不是我们想要的结果，那么为什么会出现上图的查询结果呢？我们把group by去掉看看。
 
@@ -112,7 +112,7 @@ FROM
 	 score
 ```
 
-![select4](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/smysql-row-change-to-column-score-select4.png?raw=true)
+![select4](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/mysql-row-change-to-column-score-select4.png?raw=true)
 
 　　通过上图应该会猜到原因。执行上面的sql时，查询score表中的第一条记录时，studentName为'张三'，className为'语文'，然后就被case语句转为score，即80。那么后面的两个case因为在这一行没被匹配到，因此输出为null。因此，原表中有9条记录，查询结果也就存在9条记录。加上group by之后，就会取每个studentName的第一条记录，则出现了上面只有语文有成绩，其他都为null的查询结果。
 
