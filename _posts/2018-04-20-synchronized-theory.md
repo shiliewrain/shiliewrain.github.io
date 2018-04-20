@@ -17,7 +17,7 @@ tags : 同步 synchronized原理
 
 　　synchronized锁对象是通过获得对象实例的对象头，其实现如下：
 
-```C++
+```java
 ObjectMonitor() {
     _header       = NULL;
     _count        = 0; //记录个数
