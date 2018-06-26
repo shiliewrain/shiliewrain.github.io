@@ -49,7 +49,7 @@ public class RocketMQProducer {
 
     public static void main(String[] args) throws Exception{
         int size = 100;
-        String address = "192.168.0.100:1234";
+        String address = "192.168.0.100:9876";
         //声明一个producer，proGro为Group名称
         DefaultMQProducer producer = new DefaultMQProducer("proGro");
         //设置NameServer地址
@@ -79,7 +79,7 @@ public class RocketMQConsumer {
         //声明一个消费者，conGro为Consumer Group名称
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("conGro");
         //消费者设置NameServer地址
-        consumer.setNamesrvAddr("192.168.0.100:1234");
+        consumer.setNamesrvAddr("192.168.0.100:9876");
         //设置消费起始位置
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
         //设置订阅的topic以及过滤使用的子表达式
