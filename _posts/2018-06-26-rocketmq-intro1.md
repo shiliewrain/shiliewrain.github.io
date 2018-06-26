@@ -144,7 +144,7 @@ public class RocketMQConsumer {
 }
 ```
 
-　　另一种是pull模式，代码如下：
+　　push模式实际是对pull模式的封装，在Consumer中要注册一个消息监听器，当队列中有新消息时，实际还是采用pull方法把消息拉取过来，让人感觉是Broker将消息推过来的。另一种pull模式，代码如下：
 
 ```java
 public class RocketMQPullConsumer {
@@ -197,12 +197,158 @@ public class RocketMQPullConsumer {
 }
 ```
 
+　　
+　　因为push模式最终还是用了pull模式获取消息，所以这里只分析一下pull模式获取消息的大致过程，能力有限，只能做概况，错误地方还请见谅。
+　　
+　　DefaultMQPullConsumer中的start方法最终调用的是DefaultMQPullConsumerImpl中的start方法。该方法先获取一个MQClientInstance示例，然后将group和consumer注册到该实例中，注册成功后，启动该实例，代码如下：
+　　
+```java
+public void start() throws MQClientException {
+        switch(this.serviceState) {
+        case CREATE_JUST:
+            this.serviceState = ServiceState.START_FAILED;
+            this.checkConfig();
+            this.copySubscription();
+            if (this.defaultMQPullConsumer.getMessageModel() == MessageModel.CLUSTERING) {
+                this.defaultMQPullConsumer.changeInstanceNameToPID();
+            }
 
+            this.mQClientFactory = MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQPullConsumer, this.rpcHook);
+            this.rebalanceImpl.setConsumerGroup(this.defaultMQPullConsumer.getConsumerGroup());
+            this.rebalanceImpl.setMessageModel(this.defaultMQPullConsumer.getMessageModel());
+            this.rebalanceImpl.setAllocateMessageQueueStrategy(this.defaultMQPullConsumer.getAllocateMessageQueueStrategy());
+            this.rebalanceImpl.setmQClientFactory(this.mQClientFactory);
+            this.pullAPIWrapper = new PullAPIWrapper(this.mQClientFactory, this.defaultMQPullConsumer.getConsumerGroup(), this.isUnitMode());
+            this.pullAPIWrapper.registerFilterMessageHook(this.filterMessageHookList);
+            if (this.defaultMQPullConsumer.getOffsetStore() != null) {
+                this.offsetStore = this.defaultMQPullConsumer.getOffsetStore();
+            } else {
+                switch(this.defaultMQPullConsumer.getMessageModel()) {
+                case BROADCASTING:
+                    this.offsetStore = new LocalFileOffsetStore(this.mQClientFactory, this.defaultMQPullConsumer.getConsumerGroup());
+                    break;
+                case CLUSTERING:
+                    this.offsetStore = new RemoteBrokerOffsetStore(this.mQClientFactory, this.defaultMQPullConsumer.getConsumerGroup());
+                }
+            }
+
+            this.offsetStore.load();
+            boolean registerOK = this.mQClientFactory.registerConsumer(this.defaultMQPullConsumer.getConsumerGroup(), this);
+            if (!registerOK) {
+                this.serviceState = ServiceState.CREATE_JUST;
+                throw new MQClientException("The consumer group[" + this.defaultMQPullConsumer.getConsumerGroup() + "] has been created before, specify another name please." + FAQUrl.suggestTodo("http://docs.aliyun.com/cn#/pub/ons/faq/exceptions&group_duplicate"), (Throwable)null);
+            } else {
+                this.mQClientFactory.start();
+                this.log.info("the consumer [{}] start OK", this.defaultMQPullConsumer.getConsumerGroup());
+                this.serviceState = ServiceState.RUNNING;
+            }
+        default:
+            return;
+        case RUNNING:
+        case SHUTDOWN_ALREADY:
+        case START_FAILED:
+            throw new MQClientException("The PullConsumer service state not OK, maybe started once, " + this.serviceState + FAQUrl.suggestTodo("http://docs.aliyun.com/cn#/pub/ons/faq/exceptions&service_not_ok"), (Throwable)null);
+        }
+    }
+```
+
+　　启动客户端完成了以下几件主要的事情：
+　　
+```java
+public void start() throws MQClientException {
+        synchronized(this) {
+            switch(this.serviceState) {
+            case CREATE_JUST:
+                this.serviceState = ServiceState.START_FAILED;
+                //获取NamesrvAddr
+                if (null == this.clientConfig.getNamesrvAddr()) {
+                    this.clientConfig.setNamesrvAddr(this.mQClientAPIImpl.fetchNameServerAddr());
+                }
+                //启动Netty通信服务
+                this.mQClientAPIImpl.start();
+                //启动各种定时任务
+                this.startScheduledTask();
+                //启动消息拉取服务
+                this.pullMessageService.start();
+                //启动负载均衡服务
+                this.rebalanceService.start();
+                this.defaultMQProducer.getDefaultMQProducerImpl().start(false);
+                this.log.info("the client factory [{}] start OK", this.clientId);
+                this.serviceState = ServiceState.RUNNING;
+            case RUNNING:
+            case SHUTDOWN_ALREADY:
+            default:
+                return;
+            case START_FAILED:
+                throw new MQClientException("The Factory object[" + this.getClientId() + "] has been created before, and failed.", (Throwable)null);
+            }
+        }
+    }
+```
+
+　　以上的几步完成了很多重要的初始化工作，包括但不仅限于获取namesrv地址、更新路由、注册消费者信息、向broker发送心跳包等。这里忽略其他的内容，主要分析获取队列消息的代码实现。
+　　
+　　PullMessageService继承了ServiceThread，其run方法如下：
+　　
+```java
+public void run() {
+        this.log.info(this.getServiceName() + " service started");
+
+        while(!this.isStoped()) {
+            try {
+                PullRequest pullRequest = (PullRequest)this.pullRequestQueue.take();
+                if (pullRequest != null) {
+                    this.pullMessage(pullRequest);
+                }
+            } catch (InterruptedException var2) {
+                ;
+            } catch (Exception var3) {
+                this.log.error("Pull Message Service Run Method exception", var3);
+            }
+        }
+
+        this.log.info(this.getServiceName() + " service end");
+    }
+```
+
+　　pullMessage方法实现如下：
+　　
+```java
+private void pullMessage(PullRequest pullRequest) {
+        MQConsumerInner consumer = this.mQClientFactory.selectConsumer(pullRequest.getConsumerGroup());
+        if (consumer != null) {
+            DefaultMQPushConsumerImpl impl = (DefaultMQPushConsumerImpl)consumer;
+            impl.pullMessage(pullRequest);
+        } else {
+            this.log.warn("No matched consumer for the PullRequest {}, drop it", pullRequest);
+        }
+
+    }
+```
+
+　　因为DefaultMQPushConsumerImpl.pullMessage(PullRequest pullRequest)这个方法长到令人发指，所以我这里就不贴它了。里面的核心是通过pullAPIWrapper.pullKernelImpl方法经过MQClientAPIImpl.pullMessage，再通过pullMessageAsync或者pullMessageSync，再通过processPullResponse调用RemotingCommand.decodeCommandCustomHeader方法完成。里面经过了很多繁琐的步骤，完成了消费队列的负载均衡、发送Pull请求等操作。
+　　
+### 总结
+
+　　RocketMQ的使用并不复杂，但其中的实现还是非常复杂的，有机会再多研究透彻一点吧。
 
 ### 参考
-
 
 
 [RocketMQ 实战之快速入门](https://www.jianshu.com/p/824066d70da8)
 
 [十分钟入门RocketMQ ](http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/)
+
+[rocketmq--push消费过程](https://www.cnblogs.com/chenjunjie12321/p/7922362.html)
+
+[RocketMQ源码分析----消费消息](https://blog.csdn.net/u013160932/article/details/59605583)
+
+[rocketmq--消息的产生（普通消息）](https://www.cnblogs.com/chenjunjie12321/p/7728434.html)
+
+[RocketMQ原理](https://blog.csdn.net/wuzhengfei1112/article/details/78076718)
+
+[【RocketMQ原理解析2.1】源码目录结构介绍&Remoting通信层](https://blog.csdn.net/a2888409/article/details/53838580)
+
+[RocketMQ 源码分析 —— 高可用](http://www.iocoder.cn/RocketMQ/high-availability/)
+
+[分布式开放消息系统(RocketMQ)的原理与实践](https://www.jianshu.com/p/453c6e7ff81c)
