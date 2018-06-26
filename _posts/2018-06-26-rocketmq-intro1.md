@@ -5,7 +5,7 @@ category : Java
 tags : RocketMQ 消息中间件
 ---
 
-* conntent
+*conntent
 {:tac}
 
 　　在工作中刚刚接触到RocketMQ，学习了基础内容，整理总结记录下来，加深印象。
