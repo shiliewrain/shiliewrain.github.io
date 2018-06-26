@@ -71,7 +71,7 @@ public class RocketMQProducer {
 　　上面是一个非常简单的消息生产者的代码示例。
 #### 消费者Consumer
 
-　　代码如下：
+　　Consumer有两种模式，一种是push，代码如下：
 ```java
 public class RocketMQConsumer {
 
@@ -95,7 +95,61 @@ public class RocketMQConsumer {
 }
 ```
 
-　　消息的消费有两种模式，上面代码展示的是push模式，也是目前工作中使用到的一种模式。
+　　另一种是pull模式，代码如下：
+
+```java
+public class RocketMQPullConsumer {
+
+    private static final Map<MessageQueue, Long> offsetTable = new HashMap<>();
+
+    public static void main(String[] args) throws Exception {
+
+        DefaultMQPullConsumer consumer = new DefaultMQPullConsumer("conGro");
+        consumer.setNamesrvAddr("192.168.0.100:9876");
+        consumer.start();
+        Set<MessageQueue> messageQueues = consumer.fetchSubscribeMessageQueues("Topic1");
+        for (MessageQueue queue : messageQueues){
+            SINGLE_MQ : while (true) {
+                try {
+                    PullResult result = consumer.pullBlockIfNotFound(queue, null, getMessageQueueOffset(queue), 32);
+                    putMessageQueueOffset(queue, result.getNextBeginOffset());
+                    switch (result.getPullStatus()) {
+                        case FOUND:
+                            //do something
+                            break;
+                        case NO_MATCHED_MSG:
+                            break;
+                        case NO_NEW_MSG:
+                            break SINGLE_MQ;
+                        case OFFSET_ILLEGAL:
+                            break;
+                        default:
+                            break;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        consumer.shutdown();
+    }
+
+    private static void putMessageQueueOffset(MessageQueue queue, long offset){
+        offsetTable.put(queue, offset);
+    }
+
+    private static long getMessageQueueOffset(MessageQueue queue){
+        Long offset = offsetTable.get(queue);
+        if (offset != null){
+            return offset;
+        }
+        return 0;
+    }
+}
+```
+
+
+
 ### 参考
 
 [RocketMQ 实战之快速入门](https://www.jianshu.com/p/824066d70da8)
