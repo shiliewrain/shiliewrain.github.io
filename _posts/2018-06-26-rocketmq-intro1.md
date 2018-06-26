@@ -12,6 +12,8 @@ tags : RocketMQ 消息中间件
 
 ### 特点
 
+
+
 　　RcoketMQ 是阿里出品的一款低延迟、高可靠、可伸缩、易于使用的消息中间件。其特点很多，稍微列举几个：
   1. 支持发布/订阅和点对点的消息模型
 
@@ -38,6 +40,8 @@ tags : RocketMQ 消息中间件
      
 
 ### 架构
+
+
 
 　　这里先引用一张阿里中间件团队博客的图，如下：
 ![RocketMQ物理架构](http://img3.tbcdn.cn/5476e8b07b923/TB18GKUPXXXXXXRXFXXXXXXXXXX)
@@ -70,8 +74,15 @@ tags : RocketMQ 消息中间件
 
 ### 基础示例
 
+
+
 　　这里通过Producer和Consumer两个类简单地演示一下RockerMQ的用法。要成功执行下面的示例，需要先启动Name Server和Broker服务。这里就不叙述了，网上有很多示例。引用一个在windows环境下利用ide启动这两个服务的链接：[【RocketMQ原理解析1.1】整体介绍&IDE编译并启动RocketMQ的第一个例子](https://blog.csdn.net/a2888409/article/details/53781766)
+
+
+
 #### 生产者Producer
+
+
 
 　　直接看下面的代码：
 ```java
@@ -99,7 +110,12 @@ public class RocketMQProducer {
 ```
 
 　　上面是一个非常简单的消息生产者的代码示例。
+
+
+
 #### 消费者Consumer
+
+
 
 　　Consumer有两种模式，一种是push，代码如下：
 ```java
@@ -181,6 +197,8 @@ public class RocketMQPullConsumer {
 
 
 ### 参考
+
+
 
 [RocketMQ 实战之快速入门](https://www.jianshu.com/p/824066d70da8)
 
