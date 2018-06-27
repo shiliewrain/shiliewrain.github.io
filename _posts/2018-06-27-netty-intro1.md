@@ -79,13 +79,13 @@ public class SocketClient {
 ### Netty特点
 
 　　Netty相比Tomcat，提供了更多的协议，甚至可以自定义协议。
-　　
+
 　　Netty的另外三个被提到的优点：
-　　
+
 　　1. 并发高：采用NIO模型，并发性能高
-　　
+
 　　2. 传输快：采用零拷贝
-　　
+
 　　3. 封装好：提供丰富的API
 
 ### Netty简单示例
