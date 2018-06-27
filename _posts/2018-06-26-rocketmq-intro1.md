@@ -173,9 +173,9 @@ public class RocketMQPullConsumer {
 ```
 
 　　
-　　因为push模式最终还是用了pull模式获取消息，所以这里只分析一下pull模式获取消息的大致过程，能力有限，只能做概况，错误地方还请见谅。
+　　下面分析一下push模式的消息获取消费过程，因为push模式最终还是用了pull模式获取消息，所以过程中会包含push模式下，pull获取消息的过程，这是源码里面的实现，当然我们也可以自己去实现，如上述代码，使用pulRequest获取消息，在FOUND分支中消费消息一样。能力有限，只能做概况，错误地方还请见谅。
 
-　　DefaultMQPullConsumer中的start方法最终调用的是DefaultMQPullConsumerImpl中的start方法。该方法先获取一个MQClientInstance示例，然后将group和consumer注册到该实例中，注册成功后，启动该实例，代码如下：
+　　DefaultMQPushConsumer中的start方法最终调用的是DefaultMQPullConsumerImpl中的start方法。该方法先获取一个MQClientInstance示例，然后将group和consumer注册到该实例中，注册成功后，启动该实例，代码如下：
 　　
 ```java
 public void start() throws MQClientException {
@@ -302,6 +302,8 @@ private void pullMessage(PullRequest pullRequest) {
 ```
 
 　　因为DefaultMQPushConsumerImpl.pullMessage(PullRequest pullRequest)这个方法长到令人发指，所以我这里就不贴它了。里面的核心是通过pullAPIWrapper.pullKernelImpl方法经过MQClientAPIImpl.pullMessage，再通过pullMessageAsync或者pullMessageSync，再通过processPullResponse调用RemotingCommand.decodeCommandCustomHeader方法完成。里面经过了很多繁琐的步骤，完成了消费队列的负载均衡、发送Pull请求等操作。
+
+　　当成功接收到返回的消息后，会调用NettyClientHandler的channelRead0方法，然后调用processMessageReceived，再经过processResponseCommand方法处理，调用DefaultMQPushConsumerImpl中pullMessage方法中声明的回调对象PullCallback。该对象的FOUND分支主要完成设置下一次拉取消息的offset、消费消息和将pullRequest放回阻塞队列复用。消费消息的主要实现由ConsumeMessageConcurrentlyService的submitConsumeRequest完成（集群消费模式也可以用ConsumeMessageOrderlyService），该对象中有一个consumeExecutor线程池。当通过submitConsumeRequest提交了任务之后，该对象的内部类ConsumeRequest的run方法会执行之前在consumer中自定义的监听器，完成消息消费。
 　　
 ### 总结
 
