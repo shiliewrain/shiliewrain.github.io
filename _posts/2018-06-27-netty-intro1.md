@@ -21,7 +21,7 @@ tags : socket
 
 
 
-　　简单的理解话，Netty是一个能帮你简化网络编程的框架。
+　　简单的理解话，Netty是一个能帮你简化网络编程的框架。这里有一本好书可以阅读一下：[Netty-异步和数据驱动](https://waylau.com/essential-netty-in-action/GETTING%20STARTED/Asynchronous%20and%20Event%20Driven.html)
 
 
 
