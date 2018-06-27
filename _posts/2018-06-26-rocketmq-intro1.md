@@ -172,7 +172,6 @@ public class RocketMQPullConsumer {
 }
 ```
 
-　　
 　　下面分析一下push模式的消息获取消费过程，因为push模式最终还是用了pull模式获取消息，所以过程中会包含push模式下，pull获取消息的过程，这是源码里面的实现，当然我们也可以自己去实现，如上述代码，使用pulRequest获取消息，在FOUND分支中消费消息一样。能力有限，只能做概况，错误地方还请见谅。
 
 　　DefaultMQPushConsumer中的start方法最终调用的是DefaultMQPullConsumerImpl中的start方法。该方法先获取一个MQClientInstance示例，然后将group和consumer注册到该实例中，注册成功后，启动该实例，代码如下：
