@@ -192,3 +192,5 @@ public class ClientTest {
 [Netty从零开始（一）](https://blog.csdn.net/qq_23660243/article/details/69258687)
 
 [Netty实现原理浅析](http://www.importnew.com/15656.html)
+
+[【总结】Netty（RPC高性能之道）原理剖析](https://blog.csdn.net/zhiguozhu/article/details/50517551)
