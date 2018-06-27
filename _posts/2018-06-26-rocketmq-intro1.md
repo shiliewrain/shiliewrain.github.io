@@ -13,38 +13,25 @@ tags : RocketMQ 消息中间件
 
 
 
+
+
 ### 特点
 
-
-
 　　RcoketMQ 是阿里出品的一款低延迟、高可靠、可伸缩、易于使用的消息中间件。其特点很多，稍微列举几个：
+　
   1. 支持发布/订阅和点对点的消息模型
-
-     
 
   2. 能严格保证消息的先后顺序
 
-     
-
   3. 支持pull（拉）和push（推）两种消息消费模式（push实际是对pull的封装）
-
-     
 
   4. 因为是将消息存放在文件中，因此单一队列可存放百万消息（理论上无限）
 
-     
-
   5. 分布式
-
-     
 
   6. 支持多种消息协议
 
-     
-
 ### 架构
-
-
 
 　　这里先引用一张阿里中间件团队博客的图，如下：
 ![RocketMQ物理架构](http://img3.tbcdn.cn/5476e8b07b923/TB18GKUPXXXXXXRXFXXXXXXXXXX)
@@ -73,19 +60,11 @@ tags : RocketMQ 消息中间件
 
 　　Consumer和Producer一样会去Name Server获取Topic路由信息，但是它可以同时与Broker Master和Slave建立连接，且定时发送心跳。Consumer可以从这两者任意一个订阅消息，规则由Broker配置决定。
 
-　　
-
 ### 基础示例
-
-
 
 　　这里通过Producer和Consumer两个类简单地演示一下RockerMQ的用法。要成功执行下面的示例，需要先启动Name Server和Broker服务。这里就不叙述了，网上有很多示例。引用一个在windows环境下利用ide启动这两个服务的链接：[【RocketMQ原理解析1.1】整体介绍&IDE编译并启动RocketMQ的第一个例子](https://blog.csdn.net/a2888409/article/details/53781766)
 
-
-
 #### 生产者Producer
-
-
 
 　　直接看下面的代码：
 ```java
@@ -114,11 +93,7 @@ public class RocketMQProducer {
 
 　　上面是一个非常简单的消息生产者的代码示例。
 
-
-
 #### 消费者Consumer
-
-
 
 　　Consumer有两种模式，一种是push，代码如下：
 ```java
@@ -199,7 +174,7 @@ public class RocketMQPullConsumer {
 
 　　
 　　因为push模式最终还是用了pull模式获取消息，所以这里只分析一下pull模式获取消息的大致过程，能力有限，只能做概况，错误地方还请见谅。
-　　
+
 　　DefaultMQPullConsumer中的start方法最终调用的是DefaultMQPullConsumerImpl中的start方法。该方法先获取一个MQClientInstance示例，然后将group和consumer注册到该实例中，注册成功后，启动该实例，代码如下：
 　　
 ```java
@@ -253,7 +228,7 @@ public void start() throws MQClientException {
 ```
 
 　　启动客户端完成了以下几件主要的事情：
-　　
+　
 ```java
 public void start() throws MQClientException {
         synchronized(this) {
@@ -287,7 +262,7 @@ public void start() throws MQClientException {
 ```
 
 　　以上的几步完成了很多重要的初始化工作，包括但不仅限于获取namesrv地址、更新路由、注册消费者信息、向broker发送心跳包等。这里忽略其他的内容，主要分析获取队列消息的代码实现。
-　　
+
 　　PullMessageService继承了ServiceThread，其run方法如下：
 　　
 ```java
