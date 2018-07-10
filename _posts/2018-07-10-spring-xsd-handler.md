@@ -7,15 +7,7 @@ tags : Spring xml 自定义
 * content
 {:toc}
 
----
-layout : post
-title : "Spring加载自定义xml标签”
-category : Spring
-tags : Spring xml 自定义
----* content
-{:toc}
-
-  之前在项目中遇到了Spring加载自定义xml标签的功能，然后就把这部分内容学习了一下，简单地总结一下。
+   之前在项目中遇到了Spring加载自定义xml标签的功能，然后就把这部分内容学习了一下，简单地总结一下。
 
 
 
