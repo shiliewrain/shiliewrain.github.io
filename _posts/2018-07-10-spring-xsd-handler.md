@@ -20,21 +20,21 @@ tags : Spring xml 自定义
 
    通过三个配置文件来完成自定义xml标签：spring.schemas、xsd文件和spring.handlers。我们在spring的配置文件中使用自定义xml标签的时候，需要引入相应的schema和xsd，这里就盗用一张图来解释一下:
 
-![schema配置](https://img-blog.csdn.net/20180227125800451)
+![schema配置](https://github.com/shiliewrain/shiliewrain.github.io/blob/master/img/?raw=truespring-xsd-handler.png)
 
-  spring.schemas文件的内容如下:
+   spring.schemas文件的内容如下:
 
 ```
 http\://www.shiliew.com/schema/test.xsd=META-INF/test.xsd
 ```
 
-  spring.handlers文件内容如下：
+   spring.handlers文件内容如下：
 
 ```
 http\://www.shiliew.com/schema/test=com.handler.TestHandler
 ```
 
-  xsd文件如下：
+   xsd文件如下：
 
 ```xsd
 <?xml version=“1.0” encoding=“UTF-8” standalone=“no”?>
