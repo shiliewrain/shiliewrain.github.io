@@ -38,7 +38,7 @@ http\://www.shiliew.com/schema/test=com.handler.TestHandler
 
 　　xsd文件如下：
 
-```xsd
+```xml
 <?xml version=“1.0” encoding=“UTF-8” standalone=“no”?>
 <xsd:schema xmlns=“http://www.shiliew.com/schema/test”
             xmlns:xsd=“http://www.w3.org/2001/XMLSchema”
