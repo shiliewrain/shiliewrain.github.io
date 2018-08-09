@@ -197,5 +197,14 @@ private <T> List<T> createSpringFactoriesInstances(Class<T> type,
 
 　　通过一张图来看看整个SpringApplication的实例化过程。
 
-[![springboot-init](https://raw.githubusercontent.com/shiliewrain/shiliewrain.github.io/master/img/SpringApplication-init.png)]()
+[![springboot-init](https://raw.githubusercontent.com/shiliewrain/shiliewrain.github.io/master/img/SpringApplication-init.png)](https://raw.githubusercontent.com/shiliewrain/shiliewrain.github.io/master/img/SpringApplication-init.png)
 
+### 总结
+
+　　Springboot的启动过程还是非常复杂的，SpringApplication的实例化是为了加载一些Springboot启动默认的配置类，在SpringApplication的实例化完成后，就通过调用run方法来启动整个应用，在这个过程中，除了一些Springboot的准备工作，其余的过程和spring的启动过程是一样的。
+
+### 参考
+
+[Spring Boot 2.x 启动全过程源码分析（上）入口类剖析](https://mp.weixin.qq.com/s/RPU5gwvuWMyzUV8wFZziIw)
+
+[Spring Boot源码分析——自动配置](https://www.i3geek.com/archives/1871)
