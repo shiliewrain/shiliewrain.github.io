@@ -24,7 +24,7 @@ tags : git docker jenkins CI\CD
 
 　　registry是一个镜像仓库，用来存放我们项目的运行环境镜像。git仓库可以选择官方或者公司或者自己搭建的私有库，jenkins负责拉取最新项目，进行构建并发布到docker服务器上，执行镜像的启动，docker服务器负责从registry拉取镜像，并作为容器运行的宿主机。下面一张图可以简要表述大概的工作流程：
 
-![工作流程](../img/docker-jenkins1.png)
+![工作流程](https://raw.githubusercontent.com/shiliewrain/shiliewrain.github.io/master/img/docker-jenkins1.png)
 
 　　根据上图，所有的模块都可以运行在docker容器中，所以，一台服务器也是可以完成实验的，可根据条件自行选择。
 
