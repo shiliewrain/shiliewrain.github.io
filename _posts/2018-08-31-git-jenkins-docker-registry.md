@@ -1,6 +1,6 @@
 ---
 layout : post
-title : “git+jenkins+docker+registry的CI\CD简单实现”
+title : git+jenkins+docker+registry的CI\CD简单实现
 category : devops
 tags : git docker jenkins CI\CD
 ---
